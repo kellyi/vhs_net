@@ -1,3 +1,2 @@
 source 'https://rubygems.org'
-require 'sinatra'
-
+gem 'sinatra', git: 'git@github.com:sinatra/sinatra.git'

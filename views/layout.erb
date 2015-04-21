@@ -10,6 +10,25 @@
         padding-top: 60px;
         padding-bottom: 40px;
       }
+
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        border: 1px solid #e5e5e5;
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
     </style>
   </head>
   <body>
@@ -21,38 +40,39 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Project name</a>
+          <a class="brand" href="/">~/VHS_NET</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li class="nav-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </li>
+              <% current = request.env["sinatra.route"].split(" ")[1] unless current %>
+              <% set_cls = -> path { path == current ? "active" : ""} %>
+              <li class="<%= set_cls["/about"] %>"><a href="/about">/about</a></li>
+              <li class="<%= set_cls["/contact"] %>"><a href="/contact">/contact</a></li>
+              <li class="<%= set_cls["/signin"] %>"><a href="/signin">/signin</a></li>
+              <li class="<%= set_cls["/test"] %>"><a href="/test">/test</a></li>
             </ul>
-            <form class="navbar-form pull-right">
-              <input class="span2" type="text" placeholder="Email">
-              <input class="span2" type="password" placeholder="Password">
-              <button type="submit" class="btn">Sign in</button>
-            </form>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
     <div class="container">
-    <%= yield %>
-    <div class="container">
+      <%= yield %>
+    </div>
+    
   </body>
-  <script src="/b386/js/bootstrap.min.js">
+  <script src="/b386/js/bootstrap.min.js"></script>
+  <script src="/b386/js/jquery.js"></script>
+  <scritp src="/b386/js/active.js"></script>
+  <script src="/b386/js/bootstrap-transition.js"></script>
+  <script src="/b386/js/bootstrap-alert.js"></script>
+  <script src="/b386/js/bootstrap-modal.js"></script>
+  <script src="/b386/js/bootstrap-dropdown.js"></script>
+  <script src="/b386/js/bootstrap-scrollspy.js"></script>
+  <script src="/b386/js/bootstrap-tab.js"></script>
+  <script src="/b386/js/bootstrap-tooltip.js"></script>
+  <script src="/b386/js/bootstrap-popover.js"></script>
+  <script src="/b386/js/bootstrap-button.js"></script>
+  <script src="/b386/js/bootstrap-collapse.js"></script>
+  <script src="/b386/js/bootstrap-carousel.js"></script>
+  <script src="/b386/js/bootstrap-typeahead.js"></script>
 </html>
 
