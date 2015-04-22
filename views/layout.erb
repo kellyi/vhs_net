@@ -5,7 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/b386/css/bootstrap.css" rel="stylesheet">
     <link href="/b386/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="/layout.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        border: 1px solid #e5e5e5;
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
+    </style>
   </head>
   <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -19,13 +43,11 @@
           <a class="brand" href="/">~/VHS_NET</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <% current = request.path_info unless current %>
+              <% current = request.env["sinatra.route"].split(" ")[1] unless current %>
               <% set_cls = -> path { path == current ? "active" : ""} %>
               <li class="<%= set_cls["/about"] %>"><a href="/about">/about</a></li>
               <li class="<%= set_cls["/contact"] %>"><a href="/contact">/contact</a></li>
-              <li class="<%= set_cls["/signup"] %>"><a href="/signup">/signup</a></li>
               <li class="<%= set_cls["/signin"] %>"><a href="/signin">/signin</a></li>
-              <li class="<%= set_cls["/signout"] %>"><a href="/signout">/signout</a></li>
               <li class="<%= set_cls["/test"] %>"><a href="/test">/test</a></li>
             </ul>
           </div><!--/.nav-collapse -->
