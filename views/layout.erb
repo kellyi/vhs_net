@@ -43,11 +43,15 @@
           <a class="brand" href="/">~/VHS_NET</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <% current = request.env["sinatra.route"].split(" ")[1] unless current %>
+              <% current = request.path_info unless current %>
               <% set_cls = -> path { path == current ? "active" : ""} %>
               <li class="<%= set_cls["/about"] %>"><a href="/about">/about</a></li>
               <li class="<%= set_cls["/contact"] %>"><a href="/contact">/contact</a></li>
-              <li class="<%= set_cls["/signin"] %>"><a href="/signin">/signin</a></li>
+              <% if session[:admin] %>
+                <%= "<li class=#{set_cls["/signout"]}><a href='/signout'>/signout</a></li>" %>
+              <% else %>
+                <%= "<li class=#{set_cls["/signin"]}><a href='/signin'>/signin</a></li>" %>
+              <% end %>  
               <li class="<%= set_cls["/test"] %>"><a href="/test">/test</a></li>
             </ul>
           </div><!--/.nav-collapse -->
