@@ -1,25 +1,45 @@
 require 'sinatra'
+require 'warden'
+require 'rack-flash'
+require_relative 'models/init'
+require_relative 'routes'
 
-get '/' do
-  erb :index, :locals => {'current' => '/'}
+use Rack::Session::Cookie, secret: "IdoNoHaveAnySecret"
+use Rack::Flash, accessorize: [:error, :success]
+
+use Warden::Manager do |config|
+  # serialize user to session ->
+  config.serialize_into_session{|user| user.id}
+  # serialize user from session ->
+  config.serialize_from_session{|id| User.get(id)}
+  # configuring strategies
+  config.scope_defaults :default,
+              strategies: [:password],
+              action: 'auth/unauthenticated'
+  config.failure_app = self
 end
 
-get '/signin' do
-  erb :signin, :locals => {'current' => '/signin'}
+Warden::Strategies.add(:password) do
+  def flash
+    env['x-rack.flash']
+  end
+
+  def valid?
+    params['user'] && params['user']['username'] && params['user']['password']
+  end
+
+  def authenticate!
+    # find for user
+    user = User.first(username: params['user']['username'])
+    if user.nil?
+      fail!("Invalid username, doesn't exist!")
+      flash.error = ""
+    elsif user.authenticate(params['user']['password'])
+      flash.success = "Logged in"
+      success!(user)
+    else
+      fail!("Error; try again!")
+    end
+  end
 end
 
-get '/about' do
-  erb :about, :locals => {'current' => '/about'}
-end
-
-get '/contact' do
-  erb :contact, :locals => {'current' => '/contact'}
-end
-
-get '/test' do
-  erb :test, :locals => {'current' => '/test'}
-end
-
-not_found do
-  erb :four_oh_four, :locals => {'current' => '/four_oh_four'}
-end
