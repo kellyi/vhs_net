@@ -1,12 +1,8 @@
 require 'sinatra'
-require 'yaml'
-require './list'
+require './init'
 
 configure do
   enable :sessions
-  credentials = YAML.load_file('./auth.yml')
-  set :username, credentials[:usernames]
-  set :password, credentials[:passwords]
 end
 
 # basic routes
@@ -70,11 +66,12 @@ end
 
 post '/signin' do
   name, pw = params[:username], params[:password]
-  if settings.username.include?(name) && pw == settings.password[settings.username.index(name)]
+  if User.first(:username => name) && User.first(:username => name).password == pw
+    #settings.username.include?(name) && pw == settings.password[settings.username.index(name)]
     session[:admin] = true
     redirect to('/list')
   else
-    erb :signin
+    erb :four_oh_one
   end
 end
 

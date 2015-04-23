@@ -2,13 +2,12 @@ require './init'
 
 DataMapper.setup(:default, "sqlite3://#{Dir.pwd}/development.db")
 
-class List
+class User
   include DataMapper::Resource
-  property :id, Serial
-  property :item, String
-  property :note, String
-  property :quantity, Integer
-  property :added_on, Date
+  include BCrypt
+  property :id, Serial, :key => true
+  property :username, String, :length => 3..50
+  property :password, BCryptHash
 end
 
 DataMapper.finalize
