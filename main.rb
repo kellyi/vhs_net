@@ -1,10 +1,11 @@
 require 'sinatra'
+require 'yaml'
 
 configure do
   enable :sessions
-  # don't use these in production obviously
-  set :username, 'admin'
-  set :password, 'admin'
+  credentials = YAML.load_file('./auth.yml')
+  set :username, credentials[:usernames]
+  set :password, credentials[:passwords]
 end
 
 # basic routes
@@ -43,7 +44,8 @@ get '/signin' do
 end
 
 post '/signin' do
-  if params[:username] == settings.username && params[:password] == settings.password
+  name, pw = params[:username], params[:password]
+  if settings.username.include?(name) && pw == settings.password[settings.username.index(name)]
     session[:admin] = true
     redirect to('/test')
   else
