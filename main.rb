@@ -52,7 +52,7 @@ post '/list/add' do
   redirect to('/list')
 end
 
-get '/list/:id' do
+get '/:id/list/destroy' do
   redirect to('/four_oh_one') unless session[:admin]
   List.get(params[:id]).destroy
   redirect to('/list')

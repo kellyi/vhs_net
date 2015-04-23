@@ -14,7 +14,7 @@
         <td>#{item.quantity}</td>
         <td>#{item.note}</td>
         <td>#{item.added_on.strftime("%m/%e/%Y")}</td>
-        <td><a href='/list/#{item.id}'>x</a></td>
+        <td><a href='/#{item.id}/list/destroy')'>x</a></td>
       </tr>" %>
   <% end %>
   <%= "</table>" %>
