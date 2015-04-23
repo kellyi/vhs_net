@@ -1,12 +1,12 @@
-<h1>list</h1>
+<h1>/list</h1>
 <% if @list.any? %>
   <%= "<table class='table table-striped'>" %>
   <%= "<tr>
         <th>#</th>
-        <th>item</th>
-        <th>notes</th>
-        <th>added</th>
-        <th>remove</th>
+        <th>.item</th>
+        <th>.notes</th>
+        <th>.added</th>
+        <th>.destroy</th>
       </tr>" %>
   <% @list.each do |item| %>
   <%= "<tr>
@@ -21,4 +21,4 @@
 <% else %>
   <%= "nothing currently here!" %>  
 <% end %>
-<p class="text-right"><a href="/list/add">add an item</a></p>
+<p class="text-right"><a href="/list/add">./add</a></p>

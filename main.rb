@@ -42,7 +42,7 @@ end
 
 get '/list/add' do
   redirect to('/four_oh_one') unless session[:admin]
-  erb :new_item
+  erb :new_item, :locals => {'current' => '/list'} 
 end
 
 post '/list/add' do
