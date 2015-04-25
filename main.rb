@@ -67,7 +67,6 @@ end
 post '/signin' do
   name, pw = params[:username], params[:password]
   if User.first(:username => name) && User.first(:username => name).password == pw
-    #settings.username.include?(name) && pw == settings.password[settings.username.index(name)]
     session[:admin] = true
     redirect to('/list')
   else
