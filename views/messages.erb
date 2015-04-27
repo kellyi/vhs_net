@@ -1,0 +1,22 @@
+<h1>/messages</h1>
+<% if @messages.any? %>
+  <%= "<table class='table table-striped'>" %>
+  <%= "<tr>
+        <th>.id</th>
+        <th>.topic</th>
+        <th>.author</th>
+        <th>.added</th>
+      </tr>" %>
+  <% @messages.each do |msg| %>
+  <%= "<tr>
+        <td>#{msg.id}</td>
+        <td>#{msg.topic}</td>
+        <td>#{msg.author}</td>
+        <td>#{msg.added_on.strftime("%m/%e/%Y")}<td>
+      </tr>" %>
+  <% end %>
+  <%= "</table>" %>
+<% else %>
+  <%= "nothing currently here!" %>  
+<% end %>
+<p class="text-right"><a href="/messages/new">./new</a></p>

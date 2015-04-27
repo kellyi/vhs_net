@@ -30,6 +30,11 @@ get '/test' do
   erb :test, :locals => {'current' => '/test'}
 end
 
+get '/cat' do
+  redirect to('/four_oh_one') unless session[:admin]
+  erb :cat, :locals => {'current' => '/cat'}
+end 
+
 # list routes
 
 get '/list' do
@@ -98,6 +103,7 @@ end
 # authentication routes
 
 get '/signin' do
+  redirect to('/list') if session[:admin]
   erb :signin, :locals => {'current' => '/signin'}
 end
 
@@ -105,7 +111,8 @@ post '/signin' do
   name, pw = params[:username], params[:password]
   if User.first(:username => name) && User.first(:username => name).password == pw
     session[:admin] = true
-    redirect to('/list')
+    redirect to('/cat') if params[:species] == "cat"
+    redirect to('/list') if params[:species] == "human"
   else
     erb :four_oh_one
   end
@@ -115,3 +122,32 @@ get '/signout' do
   session.clear
   redirect to('/')
 end
+
+# message routes
+
+get '/messages' do
+  redirect to('/four_oh_one') unless session[:admin]
+  @messages = Post.all
+  erb :messages
+end
+
+get '/messages/new' do
+  redirect to('four_oh_one') unless session[:admin]
+  erb :new_message
+end
+
+post '/messages/new' do
+  redirect to('/four_oh_one') unless session[:admin]
+  msg = Post.new
+  if params[:topic].length >= 50
+    msg.topic = params[:topic][0..48]
+  else
+    msg.topic = params[:topic]
+  end
+  msg.message = params[:message]
+  msg.added_on = Time.now
+  msg.author = ["john","fred","tim"].sample
+  msg.save
+  redirect to('/messages')
+end
+
