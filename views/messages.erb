@@ -5,13 +5,15 @@
         <th>.author</th>
         <th>.topic</th>
         <th>.written</th>
+        <th>.replies</th>
         <th>.destroy</th>
       </tr>" %>
   <% @messages.each do |msg| %>
   <%= "<tr>
         <td>#{msg.author}</td>
         <td><a href='/messages/#{msg.id}'>#{msg.topic}</a></td> 
-        <td>#{msg.added_on.strftime("%m/%e/%Y")}</td>       
+        <td>#{msg.added_on.strftime("%m/%e/%Y")}</td>
+        <td>#{@comments.all(:post_id => msg.id).count}</td>    
         <td><a href='/#{msg.id}/messages/destroy'>x</a></td>
       </tr>" %>
   <% end %>

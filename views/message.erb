@@ -1,4 +1,35 @@
 <h1><%= @msg.topic %></h1>
-<p><%= "written #{@msg.added_on} by #{@msg.author}" %></p>
+<p><%= "post written by #{@msg.author} on #{@msg.added_on.strftime("%m/%e/%Y")}:" %></p>
 <p class="lead"><%= @msg.message %></p>
-<p class="text-right"><a href="/messages">/messages</a></p>
+
+<!-- comments go here -->
+<% if @comments.any? %>
+  <% counter = 1 %>
+  <% @comments.each do |comment| %>
+    <%= "<p>reply #{counter} by #{comment.author} on #{comment.added_on.strftime("%m/%e/%Y")}:<p>" %>
+    <%= "<p class='lead'>#{comment.message}</p>" %>
+    <% counter += 1 %>
+  <% end %>
+<% end %>
+<h2>/new_comment</h2>
+<form class="form-horizontal" method="POST">
+  <div class="control-group">
+    <label class="control-label" for="inputName">.author</label>
+    <div class="controls">
+      <input class="span4" type="text" name="author" required>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputNotes">.text</label>
+    <div class="controls">
+      <textarea class="span4" rows="8" name="message"></textarea>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn">.save</button>
+    </div>
+  </div>
+</form>
+
+<p class="text-right"><a href="/messages">back to /messages</a></p>

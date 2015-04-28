@@ -124,6 +124,7 @@ end
 get '/messages' do
   redirect to('/four_oh_one') unless session[:admin]
   @messages = Post.all
+  @comments = Comment.all
   erb :messages, :locals => {'current' => '/messages'}
 end
 
@@ -154,11 +155,26 @@ end
 get '/messages/:id' do
   redirect to('/four_oh_one') unless session[:admin]
   @msg = Post.get(params[:id])
+  @comments = Comment.all(:post_id => params[:id])
   erb :message, :locals => {'current' => '/messages'}
+end
+
+post '/messages/:id' do
+  #msg_id = Post.get(params[:id])
+  comment = Comment.new
+  comment.message = params[:message]
+  comment.author = params[:author]
+  comment.added_on = Time.now
+  comment.post_id = params[:id]
+  comment.save
+  redirect to('/messages')
 end
 
 get '/:id/messages/destroy' do
   redirect to('/four_oh_one') unless session[:admin]
+  Comment.all(:post_id => params[:id]).destroy
   Post.get(params[:id]).destroy
   redirect to('/messages')
 end
+
+
