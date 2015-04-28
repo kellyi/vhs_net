@@ -16,11 +16,11 @@
         <td>#{item.note}</td>
         <td>#{item.added_on.strftime("%m/%e/%Y")}</td>
         <td><a href=\"/edit/#{item.id}\">#{item.id}</a></td>
-        <td><a href='/#{item.id}/list/destroy')'>x</a></td>
+        <td><a href='/#{item.id}/list/destroy'>x</a></td>
       </tr>" %>
   <% end %>
   <%= "</table>" %>
 <% else %>
   <%= "nothing currently here!" %>  
 <% end %>
-<p class="text-right"><a href="/list/add">./add</a></p>
+<p class="text-right"><a href="/list/add">/add</a></p>

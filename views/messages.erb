@@ -2,17 +2,17 @@
 <% if @messages.any? %>
   <%= "<table class='table table-striped'>" %>
   <%= "<tr>
-        <th>.id</th>
-        <th>.topic</th>
         <th>.author</th>
-        <th>.added</th>
+        <th>.topic</th>
+        <th>.written</th>
+        <th>.destroy</th>
       </tr>" %>
   <% @messages.each do |msg| %>
   <%= "<tr>
-        <td>#{msg.id}</td>
-        <td>#{msg.topic}</td>
         <td>#{msg.author}</td>
-        <td>#{msg.added_on.strftime("%m/%e/%Y")}<td>
+        <td><a href='/messages/#{msg.id}'>#{msg.topic}</a></td> 
+        <td>#{msg.added_on.strftime("%m/%e/%Y")}</td>       
+        <td><a href='/#{msg.id}/messages/destroy'>x</a></td>
       </tr>" %>
   <% end %>
   <%= "</table>" %>
