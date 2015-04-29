@@ -69,6 +69,7 @@ GEM
     rack (1.6.0)
     rack-protection (1.5.3)
       rack
+    redcarpet (3.2.3)
     stringex (1.5.1)
     tilt (2.0.1)
     uuidtools (2.1.5)
@@ -80,4 +81,5 @@ DEPENDENCIES
   bcrypt-ruby
   data_mapper
   dm-sqlite-adapter
+  redcarpet
   sinatra!

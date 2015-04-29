@@ -1,6 +1,6 @@
 require 'sinatra'
 require './routes'
-
+require 'redcarpet'
 require 'data_mapper'
 require 'dm-core'
 require 'dm-migrations'
