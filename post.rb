@@ -10,6 +10,7 @@ class Post
   property :message, Text
   property :author, String
   property :added_on, Date
+  property :latest_comment, Date
 
   has n, :comments
 end

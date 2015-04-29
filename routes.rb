@@ -148,6 +148,7 @@ post '/messages/new' do
   end
   msg.message = params[:message]
   msg.added_on = Time.now
+  msg.latest_comment = Time.now
   msg.author = session[:user]
   msg.save
   redirect to('/messages')
@@ -161,10 +162,12 @@ get '/messages/:id' do
 end
 
 post '/messages/:id' do
+  msg = Post.get(params[:id])
   comment = Comment.new
   comment.message = params[:message]
   comment.author = session[:user]
   comment.added_on = Time.now
+  msg.latest_comment = Time.now
   comment.post_id = params[:id]
   comment.save
   redirect to('/messages')
