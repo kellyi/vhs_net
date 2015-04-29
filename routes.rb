@@ -148,11 +148,7 @@ post '/messages/new' do
   end
   msg.message = params[:message]
   msg.added_on = Time.now
-  if params[:author].length >= 50
-    msg.author = params[:author][0..48]
-  else
-    msg.author = params[:author]
-  end
+  msg.author = session[:user]
   msg.save
   redirect to('/messages')
 end
@@ -167,7 +163,7 @@ end
 post '/messages/:id' do
   comment = Comment.new
   comment.message = params[:message]
-  comment.author = params[:author]
+  comment.author = session[:user]
   comment.added_on = Time.now
   comment.post_id = params[:id]
   comment.save
