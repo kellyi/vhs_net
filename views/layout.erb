@@ -45,12 +45,15 @@
             <ul class="nav">
               <% current = request.path_info unless current %>
               <% set_cls = -> path { path == current ? "active" : ""} %>
-              <% if session[:admin] %>
+              <% if session[:user] %>
                 <%= "<li class=#{set_cls["/about"]}><a href='/about'>/about</a></li>" %>
                 <%= "<li class=#{set_cls["/list"]}><a href='/list'>/list</a></li>" %>
                 <%= "<li class=#{set_cls["/messages"]}><a href='/messages'>/messages</a></li>" %>
                 <%= "<li class=#{set_cls["/test"]}><a href='/test'>/test</a></li>" %>
-                <%= "<li class=#{set_cls["/signout"]}><a href='/signout'>/signout</a></li>" %> 
+                <%= "<li class=#{set_cls["/signout"]}><a href='/signout'>/signout</a></li>" %>
+              <% elsif session[:species] == "cat" %>
+                <%= "<li class=#{set_cls["/cat"]}><a href='/cat'>/cat</a></li>" %>
+                <%= "<li class=#{set_cls["/signout"]}><a href='/signout'>/signout</a></li>" %>
               <% else %>
                 <%= "<li class=#{set_cls["/signin"]}><a href='/signin'>/signin</a></li>" %>
               <% end %>  

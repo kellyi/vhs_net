@@ -17,16 +17,21 @@ end
 # authentication routes
 
 get '/signin' do
-  redirect to('/list') if session[:admin]
+  redirect to('/list') if session[:user]
   erb :signin, :locals => {'current' => '/signin'}
 end
 
 post '/signin' do
   name, pw = params[:username], params[:password]
   if User.first(:username => name) && User.first(:username => name).password == pw
-    session[:admin] = true
-    redirect to('/cat') if params[:species] == "cat"
-    redirect to('/') if params[:species] == "human"
+    if params[:species] == "cat"
+      session[:species] = "cat"
+      redirect to('/cat')
+    else
+      session[:species] = "human"
+      session[:user] = params[:username]
+      redirect to('/')
+    end
   else
     erb :four_oh_one
   end
@@ -40,35 +45,35 @@ end
 # protected routes
 
 get '/about' do
-  redirect to('/four_oh_one') unless session[:admin]
+  redirect to('/four_oh_one') unless session[:user]
   erb :about, :locals => {'current' => '/about'}
 end
 
 get '/test' do
-  redirect to('/four_oh_one') unless session[:admin]
+  redirect to('/four_oh_one') unless session[:user]
   erb :test, :locals => {'current' => '/test'}
 end
 
 get '/cat' do
-  redirect to('/four_oh_one') unless session[:admin]
+  redirect to('/four_oh_one') unless session[:species] == "cat"
   erb :cat, :locals => {'current' => '/cat'}
 end 
 
 # list routes
 
 get '/list' do
-  redirect to('/four_oh_one') unless session[:admin]
+  redirect to('/four_oh_one') unless session[:user]
   @list = List.all
   erb :list, :locals => {'current' => '/list'}
 end
 
 get '/list/add' do
-  redirect to('/four_oh_one') unless session[:admin]
+  redirect to('/four_oh_one') unless session[:user]
   erb :new_item, :locals => {'current' => '/list'} 
 end
 
 post '/list/add' do
-  redirect to('/four_oh_one') unless session[:admin]
+  redirect to('/four_oh_one') unless session[:user]
   item = List.new
   if params[:name].length >= 50
     item.item = params[:name][0..48]
@@ -87,18 +92,18 @@ post '/list/add' do
 end
 
 get '/list/:id' do
-  redirect to('four_oh_one') unless session[:admin]
+  redirect to('four_oh_one') unless session[:user]
   redirect to('/list')
 end
 
 get '/:id/list/destroy' do
-  redirect to('/four_oh_one') unless session[:admin]
+  redirect to('/four_oh_one') unless session[:user]
   List.get(params[:id]).destroy
   redirect to('/list')
 end
 
 get '/edit/:id' do
-  redirect to('/four_oh_one') unless session[:admin]
+  redirect to('/four_oh_one') unless session[:user]
   @item = List.get(params[:id])
   erb :edit_item, :locals => {'current' => '/list'}
 end
@@ -122,19 +127,19 @@ end
 # message routes
 
 get '/messages' do
-  redirect to('/four_oh_one') unless session[:admin]
+  redirect to('/four_oh_one') unless session[:user]
   @messages = Post.all
   @comments = Comment.all
   erb :messages, :locals => {'current' => '/messages'}
 end
 
 get '/messages/new' do
-  redirect to('four_oh_one') unless session[:admin]
+  redirect to('four_oh_one') unless session[:user]
   erb :new_message, :locals => {'current' => '/messages'}
 end
 
 post '/messages/new' do
-  redirect to('/four_oh_one') unless session[:admin]
+  redirect to('/four_oh_one') unless session[:user]
   msg = Post.new
   if params[:topic].length >= 50
     msg.topic = params[:topic][0..48]
@@ -153,14 +158,13 @@ post '/messages/new' do
 end
 
 get '/messages/:id' do
-  redirect to('/four_oh_one') unless session[:admin]
+  redirect to('/four_oh_one') unless session[:user]
   @msg = Post.get(params[:id])
   @comments = Comment.all(:post_id => params[:id])
   erb :message, :locals => {'current' => '/messages'}
 end
 
 post '/messages/:id' do
-  #msg_id = Post.get(params[:id])
   comment = Comment.new
   comment.message = params[:message]
   comment.author = params[:author]
@@ -171,10 +175,8 @@ post '/messages/:id' do
 end
 
 get '/:id/messages/destroy' do
-  redirect to('/four_oh_one') unless session[:admin]
+  redirect to('/four_oh_one') unless session[:user]
   Comment.all(:post_id => params[:id]).destroy
   Post.get(params[:id]).destroy
   redirect to('/messages')
 end
-
-
