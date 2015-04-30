@@ -51,7 +51,7 @@ end
 
 get '/test' do
   redirect to('/four_oh_one') unless session[:user]
-  erb :test, :locals => {'current' => '/test'}
+  erb :test, :locals => {'current' => '/test', 'user' => session[:user]}
 end
 
 get '/cat' do
@@ -128,7 +128,7 @@ end
 
 get '/messages' do
   redirect to('/four_oh_one') unless session[:user]
-  @messages = Post.all
+  @messages = Post.all(:order => [:id.desc])
   @comments = Comment.all
   erb :messages, :locals => {'current' => '/messages'}
 end
