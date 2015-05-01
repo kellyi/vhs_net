@@ -21,6 +21,6 @@ After `git clone`ing the repo and running `bundle install`, you'll need to set u
 
 `:006 > u.save`
 
-Then, fire it up and login!
+Then, fire it up and login! If it's hosted on a Raspberry Pi for your local network, you'll need to add a line in `main.rb` to bind it to an IP accessible by other web browsers on your network. [Sinatra's Configuring Settings site](http://www.sinatrarb.com/configuration.html) has the necessary instructions for setting the bind, and [this doc on the Raspberry Pi site](https://www.raspberrypi.org/documentation/troubleshooting/hardware/networking/ip-address.md) explains how to find your Pi's IP address.
 
-It's licensed under the GPL.
+VHS_NET is licensed under the [GNU GPL](https://github.com/kellyi/vhs_net/blob/master/LICENSE).
