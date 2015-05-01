@@ -26,10 +26,12 @@ post '/signin' do
   if User.first(:username => name) && User.first(:username => name).password == pw
     if params[:species] == "cat"
       session[:species] = "cat"
+      LoggedIn.create(:name => name, :login_time => Time.now) unless LoggedIn.first(:name => name)
       redirect to('/cat')
     else
       session[:species] = "human"
       session[:user] = params[:username]
+      LoggedIn.create(:name => name, :login_time => Time.now) unless LoggedIn.first(:name => name)
       redirect to('/')
     end
   else
@@ -38,6 +40,7 @@ post '/signin' do
 end
 
 get '/signout' do
+  LoggedIn.all(:name => session[:user]).destroy
   session.clear
   redirect to('/')
 end
@@ -58,6 +61,12 @@ get '/cat' do
   redirect to('/four_oh_one') unless session[:species] == "cat"
   erb :cat, :locals => {'current' => '/cat'}
 end 
+
+get '/who' do
+  redirect to('/four_oh_one') unless session[:user]
+  @who = LoggedIn.all
+  erb :who, :locals => {'current' => '/who'}
+end
 
 # list routes
 
