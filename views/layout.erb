@@ -45,8 +45,8 @@
             <ul class="nav">
               <% current = request.path_info unless current %>
               <% set_cls = -> path { path == current ? "active" : ""} %>
-              <% if session[:user] == :admin %>
-                <%= "<li class=#{set_cls["/about"]}><a href='/about'>/about</a></li>" %>
+              <% if session[:user] == "admin" %>
+                <%= "<li class=#{set_cls["/admin"]}><a href='/admin'>/admin</a></li>" %>
               <% end %>
               <% if session[:user] %>
                 <%= "<li class=#{set_cls["/about"]}><a href='/about'>/about</a></li>" %>

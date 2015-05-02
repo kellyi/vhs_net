@@ -23,15 +23,19 @@ end
 
 post '/signin' do
   name, pw = params[:username], params[:password]
-  if User.first(:username => name) && User.first(:username => name).password == pw
+  if name == "admin" && User.first(:username => name).password == pw
+    session[:user] = name
+    login unless LoggedIn.first(:name => name)
+    redirect to('/admin')
+  elsif User.first(:username => name) && User.first(:username => name).password == pw
     if params[:species] == "cat"
       session[:species] = "cat"
-      LoggedIn.create(:name => name, :login_time => Time.now) unless LoggedIn.first(:name => name)
+      login unless LoggedIn.first(:name => name)
       redirect to('/cat')
     else
       session[:species] = "human"
       session[:user] = params[:username]
-      LoggedIn.create(:name => name, :login_time => Time.now) unless LoggedIn.first(:name => name)
+      login unless LoggedIn.first(:name => name)
       redirect to('/')
     end
   else
@@ -60,7 +64,7 @@ get '/test' do
 end
 
 get '/cat' do
-  fourohone
+  fourohone unless session[:species] == "cat"
   update_login_time
   erb :cat, :locals => {'current' => '/cat'}
 end 
@@ -73,11 +77,20 @@ get '/who' do
   erb :who, :locals => {'current' => '/who'}
 end
 
+# admin stuff
+
 get '/admin' do
   fourohone
   redirect to('four_oh_four') unless session[:user] == "admin"
   update_login_time
   erb :admin, :locals => {'current' => '/admin'}
+end
+
+post '/admin' do
+  fourohone
+  redirect to('four_oh_four') unless session[:user] == "admin"
+  User.create(:username => params[:username], :password => params[:password])
+  redirect to('/')
 end
 
 # list routes

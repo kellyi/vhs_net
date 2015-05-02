@@ -17,8 +17,12 @@ def format_time(t)
   t.strftime("%-m/%-d/%Y %k:%M")
 end
 
+def login
+  LoggedIn.create(:name => session[:user], :login_time => Time.now)
+end
+
 def update_login_time
-  LoggedIn.create(:name => session[:user], :login_time => Time.now) unless LoggedIn.first(:name => session[:user])
+  login unless LoggedIn.first(:name => session[:user])
   w = LoggedIn.all.first(:name => session[:user])
   w.login_time = Time.now; w.save
 end
