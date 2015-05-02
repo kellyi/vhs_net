@@ -78,7 +78,7 @@ end
 get '/list' do
   redirect to('/four_oh_one') unless session[:user]
   update_login_time
-  @list = List.all
+  @list = List.all(:order => [:id.desc])
   erb :list, :locals => {'current' => '/list'}
 end
 
@@ -124,7 +124,6 @@ end
 get '/edit/:id' do
   redirect to('/four_oh_one') unless session[:user]
   update_login_time
-
   @item = List.get(params[:id])
   erb :edit_item, :locals => {'current' => '/list'}
 end
@@ -213,7 +212,7 @@ end
 get '/polls' do
   redirect to('/four_oh_one') unless session[:user]
   update_login_time
-  @polls = Poll.all
+  @polls = Poll.all(:order => [:id.desc])
   erb :polls, :locals => {'current' => '/polls'}
 end
 
@@ -262,8 +261,68 @@ post '/poll/:id' do
   redirect to('/polls')
 end
 
-def update_login_time
-  LoggedIn.create(:name => session[:user], :login_time => Time.now) unless LoggedIn.first(:name => session[:user])
-  w = LoggedIn.all.first(:name => session[:user])
-  w.login_time = Time.now; w.save
+# private mail
+
+get '/mail/received' do
+  redirect to('/four_oh_one') unless session[:user]
+  update_login_time
+  @mail = Mail.all(:recipient => session[:user])
+  @mail = @mail.all(:order => [:id.desc])
+  erb :mail, :locals => {'current' => '/mail'}  
+end
+
+get '/mail/sent' do
+  redirect to('/four_oh_one') unless session[:user]
+  update_login_time
+  @mail = Mail.all(:sender => session[:user])
+  @mail = @mail.all(:order => [:id.desc])
+  erb :sent_mail, :locals => {'current' => '/mail'}  
+end
+
+get '/mail/new' do
+  redirect to('/four_oh_one') unless session[:user]
+  update_login_time
+  erb :new_mail, :locals => {'current' => '/mail'}
+end
+
+post '/mail/new' do
+  redirect to('/four_oh_one') unless session[:user]
+  update_login_time
+  m = Mail.new
+  m.subject = params[:subject]
+  m.recipient = params[:recipient]
+  m.sender = session[:user]
+  m.sent_at = Time.now
+  m.text = params[:text]
+  m.save
+  redirect to('/mail/received')
+end
+
+get '/mail/:id' do
+  redirect to('/four_oh_one') unless session[:user]
+  update_login_time
+  @mail = Mail.get(params[:id])
+  redirect to('/four_oh_four') unless @mail.recipient == session[:user]
+  erb :read_mail, :locals => {'current' => '/mail'}
+end
+
+post '/mail/:id' do
+  redirect to('/four_oh_one') unless session[:user]
+  update_login_time
+  original_mail = Mail.get(params[:id])
+  m = Mail.new
+  m.subject = params[:subject]
+  m.sender = session[:user]
+  m.recipient = original_mail.sender
+  m.sent_at = Time.now
+  m.text = params[:text]
+  m.save
+  redirect to('/mail/received')
+end
+
+get '/:id/mail/destroy' do
+  redirect to('/four_oh_one') unless session[:user]
+  update_login_time
+  Mail.get(params[:id]).destroy
+  redirect to('/mail/received')
 end

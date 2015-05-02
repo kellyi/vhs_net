@@ -1,4 +1,4 @@
-<p><%= "poll by #{@poll.added_by} on #{@poll.added_on.strftime("%m/%-d/%Y %k:%M")}:" %></p>
+<p><%= "poll by #{@poll.added_by} on #{format_time(@poll.added_on)}:" %></p>
 <p class="lead"><%= @poll.question %></h1>
 
 <form class="form-horizontal" method="POST">

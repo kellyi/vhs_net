@@ -1,0 +1,23 @@
+<h1>/mail/sent</h1>
+<% if @mail.any? %>
+  <%= "<table class='table table-striped'>" %>
+  <%= "<tr>
+        <th>.sent_to</th>
+        <th>.subject</th>
+        <th>.sent_at</th>
+        <th>.destroy</th>
+      </tr>" %>
+  <% @mail.each do |mail| %>
+  <%= "<tr>
+        <td>#{mail.recipient}</td>
+        <td><a href='/mail/#{mail.id}'>#{mail.subject}</a></td> 
+        <td>#{format_time(mail.sent_at)}</td>   
+        <td><a href='/#{mail.id}/mail/destroy'>x</a></td>
+      </tr>" %>
+  <% end %>
+  <%= "</table>" %>
+<% else %>
+  <%= "no messages!" %>  
+<% end %>
+<p class="text-right"><a href="/mail/received">/received</a></p>
+<p class="text-right"><a href="/mail/new">/write</a></p>

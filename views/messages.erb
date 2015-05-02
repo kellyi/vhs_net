@@ -12,7 +12,7 @@
   <%= "<tr>
         <td>#{msg.author}</td>
         <td><a href='/messages/#{msg.id}'>#{msg.topic}</a></td> 
-        <td>#{msg.added_on.strftime("%m/%-d/%Y %k:%M")}</td>
+        <td>#{format_time(msg.added_on)}</td>
         <td>#{@comments.all(:post_id => msg.id).count}</td>    
         <td><a href='/#{msg.id}/messages/destroy'>x</a></td>
       </tr>" %>

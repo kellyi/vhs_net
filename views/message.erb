@@ -1,12 +1,12 @@
 <h1><%= @msg.topic %></h1>
-<p><%= "post written by #{@msg.author} on #{@msg.added_on.strftime("%m/%-d/%Y %k:%M")}:" %></p>
+<p><%= "post written by #{@msg.author} on #{format_time(@msg.added_on)}:" %></p>
 <div class="lead"><%= markdown(@msg.message) %></div>
 
 <!-- comments go here -->
 <% if @comments.any? %>
   <% counter = 1 %>
   <% @comments.each do |comment| %>
-    <%= "<p>reply #{counter} by #{comment.author} on #{comment.added_on.strftime("%m/%-d/%Y %k:%M")}:<p>" %>
+    <%= "<p>reply #{counter} by #{comment.author} on #{format_time(comment.added_on)}:<p>" %>
     <%= "<div class='lead'>#{markdown(comment.message)}</div>" %>
     <% counter += 1 %>
   <% end %>

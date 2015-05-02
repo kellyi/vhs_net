@@ -1,0 +1,27 @@
+<h1><%= "subject: #{@mail.subject}" %></h1>
+<p><%= "sent by #{@mail.sender} on #{format_time(@mail.sent_at)}" %></p>
+<div class="lead"><%= markdown(@mail.text) %></div>
+
+<h1>/mail/reply</h1>
+<form class="form-horizontal" method="POST">
+  <div class="control-group">
+    <label class="control-label" for="inputTopic">.subject</label>
+    <div class="controls">
+      <input class="span4" type="text" name="subject" value=<%= "'re: #{@mail.subject}'" %> required>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputNotes">.text</label>
+    <div class="controls">
+      <textarea class="span4" rows="8" name="text"></textarea>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn">.send</button>
+    </div>
+  </div>
+</form>
+
+<p class="text-right">mail parsed in <a href="http://daringfireball.net/projects/markdown/syntax">markdown</a></p>
+<p class="text-right"><a href="/mail">back to /mail</a></p>
