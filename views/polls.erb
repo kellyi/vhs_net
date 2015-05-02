@@ -1,0 +1,28 @@
+<h1>/polls</h1>
+<% if @polls.any? %>
+  <%= "<table class='table table-striped'>" %>
+  <%= "<tr>
+        <th>.added_by</th>
+        <th>.question</th>
+        <th>.added_on</th>
+        <th>.yeas</th>
+        <th>.nays</th>
+        <th>.destroy</th>
+      </tr>" %>
+  <% @polls.each do |p| %>
+  <%= "<tr>
+        <td>#{p.added_by}</td>
+        <td><a href='/poll/#{p.id}'>#{p.question}</a></td>
+        <td>#{p.added_on.strftime("%m/%-d/%Y %k:%M")}</td>
+        <td>#{p.yeas}</td>
+        <td>#{p.nays}</td>
+        <td><a href='/#{p.id}/polls/destroy'>x</a></td>
+      </tr>" %>
+  <% end %>
+  <%= "</table>" %>
+<% else %>
+  <%= "no polls to show!" %>  
+<% end %>
+
+
+<p class="text-right"><a href="/polls/new">/new</a></p>

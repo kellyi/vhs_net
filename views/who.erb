@@ -1,4 +1,6 @@
 <h1>/who is here?</h1>
+<p class="lead">
 <% @who.each do |user| %>
-  <%= "<p>#{user.name} at #{user.login_time.strftime("%m/%-d/%Y %k:%M")}</p>" %>
+  <%= "#{user.name} / last active at #{user.login_time.strftime("%m/%-d/%Y %k:%M")}<br />" %>
 <% end %>
+</p>

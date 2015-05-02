@@ -9,6 +9,7 @@ require './main'
 require './list'
 require './user'
 require './post'
+require './poll'
 
 configure do
   enable :sessions

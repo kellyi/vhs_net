@@ -1,0 +1,9 @@
+<p><%= "poll by #{@poll.added_by} on #{@poll.added_on.strftime("%m/%-d/%Y %k:%M")}:" %></p>
+<p class="lead"><%= @poll.question %></h1>
+
+<form class="form-horizontal" method="POST">
+  <button type="submit" class="btn btn-large btn-primary disabled" name="yea">.yea</button>
+  <button type="submit" class="btn btn-large btn-primary disabled" name="nay">.nay</button>
+</form>
+
+<p class="text-right"><a href="/polls">see all /polls</a></p>
