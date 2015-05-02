@@ -48,25 +48,25 @@ end
 # protected routes
 
 get '/about' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   erb :about, :locals => {'current' => '/about'}
 end
 
 get '/test' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   erb :test, :locals => {'current' => '/test', 'user' => session[:user]}
 end
 
 get '/cat' do
-  redirect to('/four_oh_one') unless session[:species] == "cat"
+  fourohone
   update_login_time
   erb :cat, :locals => {'current' => '/cat'}
 end 
 
 get '/who' do
-  redirect to('/four_oh_one') unless session[:user] 
+  fourohone
   update_login_time
   LoggedIn.all.each { |w| w.destroy if Time.now - 600 > w.login_time }
   @who = LoggedIn.all
@@ -76,20 +76,20 @@ end
 # list routes
 
 get '/list' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   @list = List.all(:order => [:id.desc])
   erb :list, :locals => {'current' => '/list'}
 end
 
 get '/list/add' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   erb :new_item, :locals => {'current' => '/list'} 
 end
 
 post '/list/add' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   item = List.new
   if params[:name].length >= 50
@@ -109,28 +109,29 @@ post '/list/add' do
 end
 
 get '/list/:id' do
-  redirect to('four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   redirect to('/list')
 end
 
 get '/:id/list/destroy' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   List.get(params[:id]).destroy
   redirect to('/list')
 end
 
 get '/edit/:id' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   @item = List.get(params[:id])
   erb :edit_item, :locals => {'current' => '/list'}
 end
 
 post '/edit/:id' do
-  item = List.get(params[:id])
+  fourohone
   update_login_time
+  item = List.get(params[:id])
   if params[:name].length >= 50
     item.item = params[:name][0..48]
   else
@@ -148,7 +149,7 @@ end
 # message routes
 
 get '/messages' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   @messages = Post.all(:order => [:id.desc])
   @comments = Comment.all
@@ -156,13 +157,13 @@ get '/messages' do
 end
 
 get '/messages/new' do
-  redirect to('four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   erb :new_message, :locals => {'current' => '/messages'}
 end
 
 post '/messages/new' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   msg = Post.new
   if params[:topic].length >= 50
@@ -179,7 +180,7 @@ post '/messages/new' do
 end
 
 get '/messages/:id' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   @msg = Post.get(params[:id])
   @comments = Comment.all(:post_id => params[:id])
@@ -187,6 +188,7 @@ get '/messages/:id' do
 end
 
 post '/messages/:id' do
+  fourohone
   update_login_time
   msg = Post.get(params[:id])
   comment = Comment.new
@@ -200,7 +202,7 @@ post '/messages/:id' do
 end
 
 get '/:id/messages/destroy' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   Comment.all(:post_id => params[:id]).destroy
   Post.get(params[:id]).destroy
@@ -210,19 +212,20 @@ end
 # polls
 
 get '/polls' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   @polls = Poll.all(:order => [:id.desc])
   erb :polls, :locals => {'current' => '/polls'}
 end
 
 get '/polls/new' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   erb :new_poll, :locals => {'current' => '/polls'}
 end
 
 post '/polls/new' do
+  fourohone
   update_login_time
   p = Poll.new
   p.question = params[:question]
@@ -235,21 +238,21 @@ post '/polls/new' do
 end
 
 get '/:id/polls/destroy' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   Poll.get(params[:id]).destroy
   redirect to('/polls')
 end
 
 get '/poll/:id' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   @poll = Poll.get(params[:id])
   erb :poll, :locals => {'current' => '/polls'}
 end
 
 post '/poll/:id' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   p = Poll.get(params[:id])
   if params[:yea]
@@ -264,7 +267,7 @@ end
 # private mail
 
 get '/mail/received' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   @mail = Mail.all(:recipient => session[:user])
   @mail = @mail.all(:order => [:id.desc])
@@ -272,7 +275,7 @@ get '/mail/received' do
 end
 
 get '/mail/sent' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   @mail = Mail.all(:sender => session[:user])
   @mail = @mail.all(:order => [:id.desc])
@@ -280,13 +283,13 @@ get '/mail/sent' do
 end
 
 get '/mail/new' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   erb :new_mail, :locals => {'current' => '/mail'}
 end
 
 post '/mail/new' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   m = Mail.new
   m.subject = params[:subject]
@@ -299,7 +302,7 @@ post '/mail/new' do
 end
 
 get '/mail/:id' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   @mail = Mail.get(params[:id])
   redirect to('/four_oh_four') unless @mail.recipient == session[:user]
@@ -307,7 +310,7 @@ get '/mail/:id' do
 end
 
 post '/mail/:id' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   original_mail = Mail.get(params[:id])
   m = Mail.new
@@ -321,7 +324,7 @@ post '/mail/:id' do
 end
 
 get '/:id/mail/destroy' do
-  redirect to('/four_oh_one') unless session[:user]
+  fourohone
   update_login_time
   Mail.get(params[:id]).destroy
   redirect to('/mail/received')

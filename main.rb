@@ -22,3 +22,7 @@ def update_login_time
   w = LoggedIn.all.first(:name => session[:user])
   w.login_time = Time.now; w.save
 end
+
+def fourohone
+  redirect to('/four_oh_one') unless session[:user]
+end
