@@ -73,6 +73,13 @@ get '/who' do
   erb :who, :locals => {'current' => '/who'}
 end
 
+get '/admin' do
+  fourohone
+  redirect to('four_oh_four') unless session[:user] == "admin"
+  update_login_time
+  erb :admin, :locals => {'current' => '/admin'}
+end
+
 # list routes
 
 get '/list' do
@@ -305,7 +312,7 @@ get '/mail/:id' do
   fourohone
   update_login_time
   @mail = Mail.get(params[:id])
-  redirect to('/four_oh_four') unless @mail.recipient == session[:user]
+  redirect to('/four_oh_four') unless @mail.recipient == session[:user] || @mail.sender == session[:user]
   erb :read_mail, :locals => {'current' => '/mail'}
 end
 
@@ -326,6 +333,8 @@ end
 get '/:id/mail/destroy' do
   fourohone
   update_login_time
+  m = Mail.get(params[:id])
+  m.destroy unless m.recipient != session[:user] && m.sender != session[:user]
   Mail.get(params[:id]).destroy
   redirect to('/mail/received')
 end

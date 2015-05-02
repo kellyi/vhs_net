@@ -1,5 +1,5 @@
 <h1><%= "subject: #{@mail.subject}" %></h1>
-<p><%= "sent by #{@mail.sender} on #{format_time(@mail.sent_at)}" %></p>
+<p><%= "sent by #{@mail.sender} to #{@mail.recipient} on #{format_time(@mail.sent_at)}" %></p>
 <div class="lead"><%= markdown(@mail.text) %></div>
 
 <h1>/mail/reply</h1>
