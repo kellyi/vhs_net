@@ -24,4 +24,4 @@
 </form>
 
 <p class="text-right">mail parsed in <a href="http://daringfireball.net/projects/markdown/syntax">markdown</a></p>
-<p class="text-right"><a href="/mail">back to /mail</a></p>
+<p class="text-right"><a href="/mail/<%= @mail.sender == session[:user] ? "sent" : "received" %>">back to /mail</a></p>

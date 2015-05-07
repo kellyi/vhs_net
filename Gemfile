@@ -4,3 +4,4 @@ gem 'data_mapper'
 gem 'dm-sqlite-adapter'
 gem 'bcrypt-ruby', :require => "bcrypt"
 gem 'redcarpet'
+gem 'sanitize'

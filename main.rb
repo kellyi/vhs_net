@@ -1,11 +1,12 @@
 require 'sinatra'
-require './routes'
 require 'redcarpet'
 require 'data_mapper'
 require 'dm-core'
 require 'dm-migrations'
 require 'bcrypt'
+require 'sanitize'
 require './models'
+require './routes'
 
 configure do
   enable :sessions
