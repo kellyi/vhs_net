@@ -71,6 +71,7 @@ class List
   property :note, String
   property :quantity, Integer
   property :added_on, Time
+  property :added_by, String
 end
 
 # polls

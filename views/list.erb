@@ -5,7 +5,8 @@
         <th>.qty</th>
         <th>.item</th>
         <th>.notes</th>
-        <th>.added</th>
+        <th>.added_on</th>
+        <th>.added_by</th>
         <th>/edit</th>
         <th>.destroy</th>
       </tr>" %>
@@ -15,6 +16,7 @@
         <td>#{item.item}</td>
         <td>#{item.note}</td>
         <td>#{format_time(item.added_on)}</td>
+        <td><a href='/profile/#{item.added_by}'>#{item.added_by}</a></td>
         <td><a href=\"/edit/#{item.id}\">#{item.id}</a></td>
         <td><a href='/#{item.id}/list/destroy'>x</a></td>
       </tr>" %>

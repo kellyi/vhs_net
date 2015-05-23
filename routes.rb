@@ -124,6 +124,7 @@ post '/list/add' do
     item.note = params[:note]
   end
   item.quantity = params[:quantity]
+  item.added_by = session[:user]
   item.save
   redirect to('/list')
 end
