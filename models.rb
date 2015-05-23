@@ -10,6 +10,9 @@ class User
   property :id, Serial
   property :username, String, :length => 3..50
   property :password, BCryptHash
+  property :location, String
+  property :description, Text
+  property :site, String
 end
 
 class LoggedIn

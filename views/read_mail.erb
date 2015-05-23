@@ -1,5 +1,5 @@
 <h1><%= "subject: #{@mail.subject}" %></h1>
-<p><%= "sent by #{@mail.sender} to #{@mail.recipient} on #{format_time(@mail.sent_at)}" %></p>
+<h4 class="text-left"><%= "sent by <a href='/profile/#{@mail.sender}'>#{@mail.sender}</a> to <a href='/profile/#{@mail.recipient}'>#{@mail.recipient}</a> on #{format_time(@mail.sent_at)}" %></p>
 <div class="lead"><%= markdown(@mail.text) %></div>
 
 <h1>/mail/reply</h1>

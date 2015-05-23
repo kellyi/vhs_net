@@ -1,5 +1,5 @@
 <h1>/test at <%= "current_time => #{format_time(Time.now)}" %></h1>
-<h1>/usr is <%= user %></h1>
+<h1>/usr is <%= "<a href='/profile/#{user}'>#{user}</a>" %></h1>
 <p class="lead">
   <% request.env.each do |k,v| %>
     <%= "#{k} => #{v} <br />" %>

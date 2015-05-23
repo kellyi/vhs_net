@@ -1,0 +1,21 @@
+<h1>/profile</h1>
+<h4 class="text-left">.name</h2>
+<p class="lead">
+<%= @user.username %>
+</p>
+<h4 class="text-left">.location</h2>
+<p class="lead">
+<%= @user.location %>
+</p>
+<h4 class="text-left">.website</h2>
+<p class="lead">
+<%= @user.site %>
+</p>
+<h4 class="text-left">.note</h2>
+<p class="lead">
+<%= @user.description %>
+</p>
+
+<% if @user.username == session[:user] %>
+  <p class="text-right"><a href="/profile/edit/<%= session[:user] %>">/edit</a></p>
+<% end %>

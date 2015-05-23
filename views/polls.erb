@@ -11,7 +11,7 @@
       </tr>" %>
   <% @polls.each do |p| %>
   <%= "<tr>
-        <td>#{p.added_by}</td>
+        <td><a href='/profile/#{p.added_by}'>#{p.added_by}</a></td>
         <td><a href='/poll/#{p.id}'>#{p.question}</a></td>
         <td>#{format_time(p.added_on)}</td>
         <td>#{p.yeas}</td>

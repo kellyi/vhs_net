@@ -1,0 +1,26 @@
+<h1>/profile/edit/<%= @user.username %></h1>
+<form class="form-horizontal" method="POST">
+  <div class="control-group">
+    <label class="control-label" for="inputTopic">.location</label>
+    <div class="controls">
+      <input class="span4" type="text" name="location" value="<%= @user.location %>">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputTopic">.website</label>
+    <div class="controls">
+      <input class="span4" type="text" name="site" value="<%= @user.site %>">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputNotes">.note</label>
+    <div class="controls">
+      <textarea class="span4" rows="8" name="description"><%= @user.description %></textarea>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn">.save</button>
+    </div>
+  </div>
+</form>

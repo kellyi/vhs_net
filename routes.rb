@@ -351,3 +351,44 @@ get '/:id/mail/destroy' do
   Mail.get(params[:id]).destroy
   redirect to('/mail/received')
 end
+
+# profiles
+
+get '/profile' do
+  fourohone
+  update_login_time
+  redirect to("/profile/#{session[:user]}")
+end
+
+get '/profile/:name' do
+  fourohone
+  update_login_time
+  @user = User.first(:username => params[:name])
+  erb :profile, :locals => {'current' => '/profile'}
+end
+
+get '/profile/edit/:name' do
+  fourohone
+  update_login_time
+  if params[:name] != session[:user]
+    redirect to("/profile/#{params[:name]}")
+  else   
+    @user = User.first(:username => session[:user])
+    erb :edit_profile, :locals => {'current' => '/profile'}
+  end
+end
+
+post '/profile/edit/:name' do
+  fourohone
+  update_login_time
+  if params[:name] != session[:user]
+    redirect to("/profile/#{params[:name]}")
+  else
+    @user = User.first(:username => session[:user])
+    @user.location = params[:location]
+    @user.site = params[:site]
+    @user.description = params[:description]
+    @user.save
+    redirect to('/profile')
+  end
+end

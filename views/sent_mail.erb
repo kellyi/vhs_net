@@ -9,7 +9,7 @@
       </tr>" %>
   <% @mail.each do |mail| %>
   <%= "<tr>
-        <td>#{mail.recipient}</td>
+        <td><a href='/profile/#{mail.recipient}'>#{mail.recipient}</a></td>
         <td><a href='/mail/#{mail.id}'>#{mail.subject}</a></td> 
         <td>#{format_time(mail.sent_at)}</td>   
         <td><a href='/#{mail.id}/mail/destroy'>x</a></td>

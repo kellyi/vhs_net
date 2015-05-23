@@ -10,7 +10,7 @@
       </tr>" %>
   <% @messages.each do |msg| %>
   <%= "<tr>
-        <td>#{msg.author}</td>
+        <td><a href='/profile/#{msg.author}'>#{msg.author}</a></td>
         <td><a href='/messages/#{msg.id}'>#{msg.topic}</a></td> 
         <td>#{format_time(msg.added_on)}</td>
         <td>#{@comments.all(:post_id => msg.id).count}</td>    

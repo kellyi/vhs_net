@@ -1,6 +1,6 @@
 <h1>/who is here?</h1>
 <p class="lead">
 <% @who.each do |user| %>
-  <%= "#{user.name} / last active at #{format_time(user.login_time)}<br />" %>
+  <%= "<a href='/profile/#{user.name}'>#{user.name}</a> / last active at #{format_time(user.login_time)}<br />" %>
 <% end %>
 </p>
