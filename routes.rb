@@ -1,4 +1,5 @@
 require './main'
+require 'json'
 
 # basic routes
 
@@ -254,6 +255,7 @@ post '/polls/new' do
   p.added_by = session[:user]
   p.yeas = 0
   p.nays = 0
+  p.voted = "[]"
   p.save
   redirect to('/polls')
 end
@@ -269,6 +271,7 @@ get '/poll/:id' do
   fourohone
   update_login_time
   @poll = Poll.get(params[:id])
+  @voted = JSON.parse(@poll.voted)
   erb :poll, :locals => {'current' => '/polls'}
 end
 
@@ -281,6 +284,9 @@ post '/poll/:id' do
   elsif params[:nay]
     p.nays += 1
   end
+  votes = JSON.parse(p.voted)
+  votes << session[:user]
+  p.voted = votes.to_json
   p.save
   redirect to('/polls')
 end

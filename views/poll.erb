@@ -1,9 +1,13 @@
 <p><%= "poll by #{@poll.added_by} on #{format_time(@poll.added_on)}:" %></p>
 <p class="lead"><%= @poll.question %></h1>
 
+<% if !@voted.include?(session[:user]) %>
 <form class="form-horizontal" method="POST">
   <button type="submit" class="btn btn-large btn-primary disabled" name="yea">.yea</button>
   <button type="submit" class="btn btn-large btn-primary disabled" name="nay">.nay</button>
 </form>
+<% else %>
+<h2 class="text-left">thanks for voting!</h2>
+<% end %>
 
 <p class="text-right"><a href="/polls">see all /polls</a></p>

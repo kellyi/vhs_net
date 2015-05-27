@@ -84,6 +84,7 @@ class Poll
   property :nays, Integer
   property :added_on, Time
   property :added_by, String
+  property :voted, Text
 end
 
 DataMapper.finalize
