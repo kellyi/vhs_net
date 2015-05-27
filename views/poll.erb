@@ -1,4 +1,4 @@
-<p><%= "poll by #{@poll.added_by} on #{format_time(@poll.added_on)}:" %></p>
+<p><%= "poll by <a href='/profile/#{@poll.added_by}'>#{@poll.added_by}</a> on #{format_time(@poll.added_on)}:" %></p>
 <p class="lead"><%= @poll.question %></h1>
 
 <% if !@voted.include?(session[:user]) %>
@@ -7,7 +7,7 @@
   <button type="submit" class="btn btn-large btn-primary disabled" name="nay">.nay</button>
 </form>
 <% else %>
-<h2 class="text-left">thanks for voting!</h2>
+<h4 class="text-left">thanks for voting!</h2>
 <% end %>
 
 <p class="text-right"><a href="/polls">see all /polls</a></p>

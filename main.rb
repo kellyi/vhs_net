@@ -1,3 +1,4 @@
+require 'json'
 require 'sinatra'
 require 'redcarpet'
 require 'data_mapper'

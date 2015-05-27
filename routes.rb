@@ -1,5 +1,4 @@
 require './main'
-require 'json'
 
 # basic routes
 
