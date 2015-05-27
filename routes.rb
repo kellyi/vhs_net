@@ -169,21 +169,21 @@ end
 
 # message routes
 
-get '/messages' do
+get '/forum' do
   fourohone
   update_login_time
   @messages = Post.all(:order => [:id.desc])
   @comments = Comment.all
-  erb :messages, :locals => {'current' => '/messages'}
+  erb :messages, :locals => {'current' => '/forum'}
 end
 
-get '/messages/new' do
+get '/forum/new' do
   fourohone
   update_login_time
-  erb :new_message, :locals => {'current' => '/messages'}
+  erb :new_message, :locals => {'current' => '/forum'}
 end
 
-post '/messages/new' do
+post '/forum/new' do
   fourohone
   update_login_time
   msg = Post.new
@@ -197,18 +197,18 @@ post '/messages/new' do
   msg.latest_comment = Time.now
   msg.author = session[:user]
   msg.save
-  redirect to('/messages')
+  redirect to('/forum')
 end
 
-get '/messages/:id' do
+get '/forum/:id' do
   fourohone
   update_login_time
   @msg = Post.get(params[:id])
   @comments = Comment.all(:post_id => params[:id])
-  erb :message, :locals => {'current' => '/messages'}
+  erb :message, :locals => {'current' => '/forum'}
 end
 
-post '/messages/:id' do
+post '/forum/:id' do
   fourohone
   update_login_time
   msg = Post.get(params[:id])
@@ -219,7 +219,7 @@ post '/messages/:id' do
   msg.latest_comment = Time.now
   comment.post_id = params[:id]
   comment.save
-  redirect to('/messages')
+  redirect to('/forum')
 end
 
 get '/:id/messages/destroy' do
@@ -227,7 +227,7 @@ get '/:id/messages/destroy' do
   update_login_time
   Comment.all(:post_id => params[:id]).destroy
   Post.get(params[:id]).destroy
-  redirect to('/messages')
+  redirect to('/forum')
 end
 
 # polls

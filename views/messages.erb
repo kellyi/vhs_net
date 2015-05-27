@@ -1,4 +1,4 @@
-<h1>/messages</h1>
+<h1>/forum</h1>
 <% if @messages.any? %>
   <%= "<table class='table table-striped'>" %>
   <%= "<tr>
@@ -11,7 +11,7 @@
   <% @messages.each do |msg| %>
   <%= "<tr>
         <td><a href='/profile/#{msg.author}'>#{msg.author}</a></td>
-        <td><a href='/messages/#{msg.id}'>#{msg.topic}</a></td> 
+        <td><a href='/forum/#{msg.id}'>#{msg.topic}</a></td> 
         <td>#{format_time(msg.added_on)}</td>
         <td>#{@comments.all(:post_id => msg.id).count}</td>    
         <td><a href='/#{msg.id}/messages/destroy'>x</a></td>
@@ -19,6 +19,6 @@
   <% end %>
   <%= "</table>" %>
 <% else %>
-  <%= "no messages!" %>  
+  <%= "no posts!" %>  
 <% end %>
-<p class="text-right"><a href="/messages/new">/new</a></p>
+<p class="text-right"><a href="/forum/new">/new</a></p>
