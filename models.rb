@@ -62,18 +62,6 @@ class Mail
   property :sent_at, Time
 end
 
-# list
-
-class List
-  include DataMapper::Resource
-  property :id, Serial
-  property :item, String
-  property :note, String
-  property :quantity, Integer
-  property :added_on, Time
-  property :added_by, String
-end
-
 # polls
 
 class Poll
