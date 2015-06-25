@@ -3,6 +3,8 @@ VHS_NET
 
 VHS_NET is a little messageboard/bbs app written in Sinatra and meant to run on a Raspberry Pi.
 
+![screenshot](https://github.com/kellyi/vhs_net/blob/master/vhs_net.png)
+
 It uses the [BOOTSTRAP.386](http://kristopolous.github.io/BOOTSTRA.386/) css/js library.
 
 After `git clone`ing the repo and running `bundle install`, you'll need to set up an admin user:
